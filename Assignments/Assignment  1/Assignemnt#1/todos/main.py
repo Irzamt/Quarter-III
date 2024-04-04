@@ -8,6 +8,12 @@ students = [{
     "Name": "One",
     "Age": 15,
     "Grade": "6th"
+},
+{
+    "Student ID": 302,
+    "Name": "Two",
+    "Age": 16,
+    "Grade": "7th"
 }]
 
 # GET /students: Retrieve all students.
@@ -16,9 +22,8 @@ def getStudents():
     return students
 
 #  GET /students/{student_id}: Retrieve specific student details.
-@app.get("/students")
-def getStudent(studentID: int):
-    global students
+@app.get("/students/{studentID}")
+def get_student(studentID: int):
     for student in students:
         if student["Student ID"] == studentID:
             return student
@@ -38,19 +43,17 @@ def addStudent(studentID:int,
     return students
 
 # PUT /students/{student_id}: Update a student's details.
-@app.put("/addStudent")
-def updateStudent(studentID: int,
-                   name: str,
-                   age: int,
-                   grade: str):
-    global students
+@app.put("/students/{studentID}")
+def update_student(studentID: int,
+                    name: str,
+                    age: int,
+                    grade: str):
     for student in students:
         if student["Student ID"] == studentID:
             student["Name"] = name
             student["Age"] = age
             student["Grade"] = grade
-            break
-    return students
+            return student
 
 # DELETE /students/{student_id}: Delete a student.
 @app.delete("/students/{studentID}")
